@@ -7,3 +7,4 @@ main = do
       x = map readInt w
       t = sum x
   putStrLn $ show t
+
