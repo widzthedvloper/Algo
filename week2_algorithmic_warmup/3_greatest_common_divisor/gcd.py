@@ -7,7 +7,18 @@ def gcd(a, b):
 
     return current_gcd
 
+def my_gcd(a, b):
+    numerator = a
+    denominator = b
+
+    result = numerator % denominator
+
+    if result == 0:
+        return denominator
+    else:
+      return my_gcd(denominator, result)
+
 
 if __name__ == "__main__":
     a, b = map(int, input().split())
-    print(gcd(a, b))
+    print(my_gcd(a, b))
