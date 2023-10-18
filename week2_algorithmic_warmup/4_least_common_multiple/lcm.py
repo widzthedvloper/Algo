@@ -20,13 +20,10 @@ def my_lcm(a, b):
     
     
 def stress_test():
-    print("computing.....")
     while True:
         a = random.randint(1, 10000)
         b = random.randint(1, 10000)
         if lcm(a, b) != my_lcm(a, b):
-            print(a, b, "Divergence here!!!!")
-            print(lcm(a, b), my_lcm(a, b))
             break
         
         print(a, b)
