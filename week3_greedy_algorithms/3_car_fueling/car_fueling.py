@@ -2,24 +2,30 @@ from sys import stdin
 
 
 def min_refills(distance, tank, stops):
-    # write your code here
-    refill_amount = 0
-    tank_miles = tank
-    new_stops = stops.append(distance - (len(stops) - 1))
-    for i in range(len(new_stops) - 2):
-        next_stop_distance = new_stops[i + 1]
-        tank_miles -= new_stops[1]
-
-        if tank_miles < next_stop_distance:
-            if tank_miles + tank > next_stop_distance:
-                return -1
-            refill_amount += 1
+    if distance == 0 or tank == 0 or len(stops) == 0:
+        return -1
+    # write your code here  
+    my_reserve = tank
+    refill = 0
+    for idx, station in enumerate(stops):
+        next_stop = 0
+        if idx + 1 < len(stops):
+            next_stop = stops[idx + 1]
+        else:
+            next_stop = distance
         
-
-
-    return refill_amount
+        my_distance = next_stop - station
+        my_reserve -= my_distance 
+        if (my_reserve + tank) < my_distance:
+            return -1 
+        if my_distance > my_reserve:
+            refill += 1
+            my_reserve += tank
+    return refill
 
 
 if __name__ == '__main__':
     d, m, _, *stops = map(int, stdin.read().split())
     print(min_refills(d, m, stops))
+
+# print(min_refills(950, 400, [200,375, 550, 750]))

@@ -1,29 +1,22 @@
 from sys import stdin
 
+def sort_by_fraction(value_pair):
+    weight, value = value_pair
+    return weight / value
 
 def optimal_value(capacity, weights, values):
-    value = 0.
-    cap = capacity
-    # write your code here
-    values_per_weights = {}
-    values_per_weights_arr = []
-    for i in range(len(weights)):
-        val_per_weight = values[i] / weights[i]
-        values_per_weights_arr.append(val_per_weight)
-        values_per_weights[val_per_weight] = [values[i], weights[i]]
-
-    values_per_weights_arr.sort()
-
-    for val_per_w in values_per_weights_arr:
-        val, wei = values_per_weights[val_per_w]
-        if wei <= cap and cap < 0:
-            value += wei * val_per_w
-            cap -= val
-        elif wei > cap:
-            value += cap * val_per_w
-            cap = 0
-
-    return value
+    acc_capacity = capacity
+    result = 0
+    zip_weights_values = list(zip(weights, values))
+    zip_weights_values.sort(key=sort_by_fraction, reverse=True)
+    for value in zip_weights_values:
+        W, V = value
+        quantity = min(acc_capacity, V)
+        if acc_capacity <= 0:
+            return result
+        acc_capacity -= quantity
+        result += W * (quantity/V)
+    return result
 
 
 if __name__ == "__main__":
@@ -33,3 +26,5 @@ if __name__ == "__main__":
     weights = data[3:(2 * n + 2):2]
     opt_value = optimal_value(capacity, weights, values)
     print("{:.10f}".format(opt_value))
+
+# print(optimal_value(50, [60,100,120], [20,50,30]))
